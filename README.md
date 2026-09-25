@@ -11,13 +11,17 @@
 | macOS Apple Silicon | `https://github.com/EKKOLearnAI/ekko-studio-update-test/releases/download/update-test-darwin-arm64/` |
 | macOS Intel | `https://github.com/EKKOLearnAI/ekko-studio-update-test/releases/download/update-test-darwin-x64/` |
 | Windows x64 | `https://github.com/EKKOLearnAI/ekko-studio-update-test/releases/download/update-test-win32-x64/` |
+| Linux x64 | `https://github.com/EKKOLearnAI/ekko-studio-update-test/releases/download/update-test-linux-x64/` |
+| Linux arm64 | `https://github.com/EKKOLearnAI/ekko-studio-update-test/releases/download/update-test-linux-arm64/` |
 
-这些地址由工作流自动写入测试包，无需手动填写。对应平台第一次成功发布后才有可下载的文件；目录本身不是网页。macOS 清单为 `latest-mac.yml`，Windows 为 `latest.yml`。请通过 [Releases](https://github.com/EKKOLearnAI/ekko-studio-update-test/releases) 下载 A 版本安装器，再构建更高版本 B 测试更新。
+这些地址由工作流自动写入测试包，无需手动填写。对应平台第一次成功发布后才有可下载的文件；目录本身不是网页。macOS 清单为 `latest-mac.yml`，Windows 为 `latest.yml`，Linux x64 为 `latest-linux.yml`，Linux arm64 为 `latest-linux-arm64.yml`。请通过 [Releases](https://github.com/EKKOLearnAI/ekko-studio-update-test/releases) 下载 A 版本安装器，再构建更高版本 B 测试更新。
 
 每个平台使用单独的预发布 Release；保留旧版安装器和 blockmap，先上传完整文件，再切换清单。同一平台只允许版本前进，不能用不同内容覆盖已发布的同名安装器。
 
 ## 测试说明
 
 完整步骤及一次性权限配置见 [桌面更新测试文档](https://github.com/EKKOLearnAI/ekko-studio/blob/main/packages/desktop/UPDATE-TESTING.md)。测试包使用与正式版相同的应用身份，请在专用测试机、虚拟机或独立系统用户中安装。测试包固定使用测试源，恢复正式源需手动安装正式版。
+
+Linux 测试包为 AppImage，差分 blockmap 嵌在包内，没有单独的 `.blockmap` 文件。下载 A 后放在当前用户可写的目录，赋予执行权限（`chmod +x 文件名.AppImage`）并以普通用户启动 AppImage，再检查更新到 B；不要直接启动解压后的程序。需要 FUSE 兼容库时按发行版提示安装。更新可能改变带版本号的文件名，重启后核对版本与快捷方式。
 
 本仓库不包含应用源码，不运行生产发布工作流。构建代码位于 [Ekko Studio](https://github.com/EKKOLearnAI/ekko-studio)。本仓库文档采用 MIT；托管的 Ekko Studio 二进制仍遵循源项目及其第三方组件的许可证，不因上传到本仓库而改变。
